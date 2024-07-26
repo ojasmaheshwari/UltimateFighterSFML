@@ -3,6 +3,7 @@
 #include "MainWindow.h"
 #include "StateManager.h"
 #include "States/MainMenuState.h"
+#include "utils/Logging.h"
 #include <SFML/Window/Event.hpp>
 
 class Game {
@@ -20,4 +21,5 @@ class Game {
     sf::Event m_MainEvent;
     StateManager m_StateManager;
     MainMenuState *m_MainMenu;
+    Logging m_Logger;
 };

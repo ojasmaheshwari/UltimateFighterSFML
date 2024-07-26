@@ -32,7 +32,6 @@ BaseState* StateManager::getCurrentState() const {
 void StateManager::switchState(BaseState *state) {
   if (state != nullptr) {
     if (m_CurrentState != nullptr) {
-      std::cout << "m_CurrentState is not nullptr? maybe??" << '\n';
       delete m_CurrentState;
     }
     m_CurrentState = state;
