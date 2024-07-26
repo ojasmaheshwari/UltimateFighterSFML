@@ -28,12 +28,12 @@ void Game::quit() {
 }
 
 void Game::update() {
-  m_StateManager.update();
+  m_StateManager.getCurrentState()->update();
 }
 
 void Game::draw() {
   m_Window.clear();
-  m_StateManager.draw();
+  m_StateManager.getCurrentState()->draw();
   m_Window.display();
 }
 

@@ -25,16 +25,10 @@ StateManager::~StateManager()
     std::cout << "StateManager->Destructor: m_CurrentState is null" << '\n';
 }
 
-void StateManager::draw() {
-  m_CurrentState->draw();
+BaseState* StateManager::getCurrentState() const {
+  return m_CurrentState;
 }
-void StateManager::update() {
-  m_CurrentState->update();
-}
-void StateManager::processEvents() {
-  m_CurrentState->processEvents();
-}
-
+ 
 void StateManager::switchState(BaseState *state) {
   if (state != nullptr) {
     if (m_CurrentState != nullptr) {

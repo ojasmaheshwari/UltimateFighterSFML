@@ -8,9 +8,7 @@ class StateManager {
     StateManager(BaseState *baseState);
     ~StateManager();
     void switchState(BaseState *state);
-    void processEvents();
-    void draw();
-    void update();
+    BaseState* getCurrentState() const;
   private:
-    BaseState *m_CurrentState;
+    BaseState* m_CurrentState;
 };
