@@ -7,6 +7,8 @@
 #include <SFML/Window/Event.hpp>
 #include <SFML/Window/Keyboard.hpp>
 
+#include <format>
+
 
 Game::Game()
   :m_Window(1000, 550, "Ultimate Fighter 2024"), m_Running(true), m_Logger(LoggingLevel::LogLevelInfo, "Game")
@@ -59,8 +61,9 @@ void Game::processEvents() {
           GameState *game = new GameState(&m_Window);
           m_Logger.log("Created game state");
 
-          m_StateManager.switchState(game);
-          m_Logger.log("Switched to game state");
+          m_StateManager.switchState(nullptr);
+          m_Logger.log("Switched to state game");
+          m_Logger.error("Example error!");
         }
         break;
       }

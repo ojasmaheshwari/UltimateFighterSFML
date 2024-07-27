@@ -1,6 +1,7 @@
 #pragma once
 
 #include "BaseState.h"
+#include "utils/Logging.h"
 
 class StateManager {
   public:
@@ -11,4 +12,5 @@ class StateManager {
     BaseState* getCurrentState() const;
   private:
     BaseState* m_CurrentState;
+    Logging m_Logger;
 };

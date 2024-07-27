@@ -1,10 +1,11 @@
 #include "include/StateManager.h"
 #include "include/BaseState.h"
+#include "include/utils/Logging.h"
 
 #include <iostream>
 
 StateManager::StateManager()
-  : m_CurrentState(nullptr)
+  : m_CurrentState(nullptr), m_Logger(LoggingLevel::LogLevelInfo, "StateManager")
 {}
 
 StateManager::StateManager(BaseState *baseState)
@@ -13,7 +14,7 @@ StateManager::StateManager(BaseState *baseState)
     m_CurrentState = baseState;
   }
   else {
-    std::cout << "StateManager->Constructor: baseState is null" << '\n';
+    m_Logger.log("Base state of StateManager constructor is nullptr", LoggingLevel::LogLevelError);
   }
 }
 
@@ -22,7 +23,7 @@ StateManager::~StateManager()
   if (m_CurrentState != nullptr)
     delete m_CurrentState;
   else
-    std::cout << "StateManager->Destructor: m_CurrentState is null" << '\n';
+    m_Logger.log("Current state of State Manager is nullptr, ignoring destruction", LoggingLevel::LogLevelWarning);
 }
 
 BaseState* StateManager::getCurrentState() const {
@@ -37,6 +38,6 @@ void StateManager::switchState(BaseState *state) {
     m_CurrentState = state;
   }
   else {
-    std::cout << "StateManager->switchState: state is null" << '\n';
+    m_Logger.log("Tried to switch to a state that is nullptr, ignoring state switch, retaining previous state", LoggingLevel::LogLevelWarning);
   }
 }

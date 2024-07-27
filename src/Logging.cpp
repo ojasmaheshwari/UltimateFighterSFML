@@ -1,4 +1,7 @@
 #include "include/utils/Logging.h"
+#include "include/utils/AsciiColor.h"
+
+#include <format>
 
 
 Logging::Logging()
@@ -21,13 +24,13 @@ LoggingLevel Logging::getLoggingLevel() const {
 void Logging::log(const std::string &message, LoggingLevel loggingLevel) {
   switch(loggingLevel) {
     case LoggingLevel::LogLevelInfo:
-      std::cout << "[INFO]" << message << " [From " << m_ClassName << ']' << '\n';
+      info(message);
       break;
     case LoggingLevel::LogLevelWarning:
-      std::cout << "[WARNING]" << message << '[' << m_ClassName << ']' << '\n';
+      warn(message);
       break;
     case LoggingLevel::LogLevelError:
-      std::cout << "[ERROR]" << message << '[' << m_ClassName << ']' << '\n';
+      error(message);
       break;
     default:
       break;
@@ -36,4 +39,16 @@ void Logging::log(const std::string &message, LoggingLevel loggingLevel) {
 
 void Logging::log(const std::string &message) {
   log(message, getLoggingLevel());
+}
+
+void Logging::info(const std::string &message) {
+  std::cout << "[INFO] " << message << " [From " << m_ClassName << ']' << '\n';
+}
+
+void Logging::warn(const std::string &message) {
+  std::cout << AsciiColor::colorized(std::format("{} {} [From {}]", "[WARNING]", message, m_ClassName), Ascii::Color::Yellow);
+}
+
+void Logging::error(const std::string &message) {
+  std::cout << AsciiColor::colorized(std::format("{} {} [From {}]", "[ERROR]", message, m_ClassName), Ascii::Color::Red);
 }
