@@ -7,7 +7,7 @@ class GameState : public BaseState {
 public:
   GameState(sf::RenderWindow *window);
   ~GameState();
-  void processEvents() override;
+  void processEvents(sf::Event &event) override;
   void draw() override;
   void update() override;
 

@@ -11,4 +11,4 @@ void GameState::draw() {
 }
 void GameState::update() {
 }
-void GameState::processEvents() {}
+void GameState::processEvents(sf::Event &event) {}

@@ -3,5 +3,5 @@
 BaseState::~BaseState() {}
 void BaseState::draw() {}
 void BaseState::update() {}
-void BaseState::processEvents() {}
+void BaseState::processEvents(sf::Event &event) {}
 

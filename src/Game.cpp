@@ -50,23 +50,12 @@ void Game::draw() {
 
 void Game::processEvents() {
   while (m_Window.pollEvent(m_MainEvent)) {
+    m_StateManager.getCurrentState()->processEvents(m_MainEvent);
+
     switch(m_MainEvent.type) {
       case sf::Event::Closed:
         quit();
         break;
-      case sf::Event::KeyPressed:
-      {
-        auto key = m_MainEvent.key;
-        if (key.code == sf::Keyboard::C) {
-          GameState *game = new GameState(&m_Window);
-          m_Logger.log("Created game state");
-
-          m_StateManager.switchState(nullptr);
-          m_Logger.log("Switched to state game");
-          m_Logger.error("Example error!");
-        }
-        break;
-      }
       default:
         break;
     }
