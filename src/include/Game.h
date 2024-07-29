@@ -2,6 +2,7 @@
 
 #include "MainWindow.h"
 #include "StateManager.h"
+#include "States/GameState.h"
 #include "States/MainMenuState.h"
 #include "utils/Logging.h"
 #include <SFML/Window/Event.hpp>
@@ -15,11 +16,13 @@ class Game {
     void draw();
     void quit();
     void processEvents();
+    void moveToPlayArena();
   private:
     bool m_Running;
     MainWindow m_Window;
     sf::Event m_MainEvent;
     StateManager m_StateManager;
     MainMenuState *m_MainMenu;
+    GameState *m_GameState;
     Logging m_Logger;
 };

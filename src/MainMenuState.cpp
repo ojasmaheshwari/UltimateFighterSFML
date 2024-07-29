@@ -9,9 +9,11 @@
 #include <SFML/Window/Keyboard.hpp>
 #include <cstdint>
 
+#include "include/Game.h"
 
-MainMenuState::MainMenuState(sf::RenderWindow *window)
-  :m_Window(window), m_Background((sf::Vector2f)m_Window->getSize()), m_Logger(LoggingLevel::LogLevelInfo, "MainMenuState"), m_MenuHeading("Main Menu", m_MenuFont, 100)
+
+MainMenuState::MainMenuState(sf::RenderWindow *window, Game* game)
+  :m_Window(window), m_Game(game), m_Background((sf::Vector2f)m_Window->getSize()), m_Logger(LoggingLevel::LogLevelInfo, "MainMenuState"), m_MenuHeading("Main Menu", m_MenuFont, 100)
 {
   if (!m_BackgroundTexture.loadFromFile("assets/menu_background.png")) {
     m_Logger.error("Unable to load resource: assets/menu_background.png");
@@ -24,9 +26,9 @@ MainMenuState::MainMenuState(sf::RenderWindow *window)
     m_Logger.error("Unable to load resource: assets/menu_font.otf");
   }
   m_MenuHeading.setOrigin(m_MenuHeading.getGlobalBounds().getSize() / 2.f);
-  m_MenuHeading.setPosition(m_Window->getSize().x / 2.0, 100);
+  m_MenuHeading.setPosition(m_Window->getSize().x / 2.0, (10 / 100.0f) * m_Window->getSize().y);
 
-  uint32_t initialChoiceY = 350;
+  uint32_t initialChoiceY = (50 / 100.0f) * m_Window->getSize().y;
   uint32_t gapBetweenChoices = 100;
   m_ChoiceCount = 3;
   m_SelectedChoiceIndex = 0;
@@ -35,7 +37,7 @@ MainMenuState::MainMenuState(sf::RenderWindow *window)
     m_MenuChoices[i].setCharacterSize(60);
     m_MenuChoices[i].setOrigin(m_MenuChoices[i].getGlobalBounds().getSize() / 2.f);
 
-    m_MenuChoices[i].setPosition(150, initialChoiceY + i*gapBetweenChoices);
+    m_MenuChoices[i].setPosition((20 / 100.0f) * m_Window->getSize().x, initialChoiceY + i*gapBetweenChoices);
   }
 
   m_MenuChoices[0].setString("Play");
@@ -70,6 +72,9 @@ void MainMenuState::processEvents(sf::Event &event) {
         case sf::Keyboard::Key::Up:
           moveChoiceUp();
           break;
+
+        case sf::Keyboard::Key::Enter:
+          doAction(m_SelectedChoiceIndex);
 
         default:
           break;
@@ -137,4 +142,29 @@ void MainMenuState::moveChoiceUp() {
   }
 
   addChoiceStyling(m_SelectedChoiceIndex);
+}
+
+void MainMenuState::doAction(uint32_t index) {
+  if (index < 0 || index >= m_ChoiceCount) {
+    m_Logger.error("Tried to remove out-of-bounds choice");
+    return;
+  }
+
+  sf::Text &action = m_MenuChoices[index];
+  if (action.getString() == "Play") {
+    m_Game->moveToPlayArena();
+  }
+  else if (action.getString() == "Help") {
+    
+  }
+  else if (action.getString() == "Quit") {
+    m_Game->quit();
+  }
+  else {
+    m_Logger.error("Action not implemented, skipping");
+  }
+}
+
+void MainMenuState::closeState() {
+  
 }

@@ -7,15 +7,13 @@
 #include <SFML/Window/Event.hpp>
 #include <SFML/Window/Keyboard.hpp>
 
-#include <format>
-
 
 Game::Game()
   :m_Window(1000, 550, "Ultimate Fighter 2024"), m_Running(true), m_Logger(LoggingLevel::LogLevelInfo, "Game")
 {
   m_Logger.log("Initialized main window");
 
-  m_MainMenu = new MainMenuState(&m_Window);
+  m_MainMenu = new MainMenuState(&m_Window, this);
   m_Logger.log("Created main menu state");
 
   m_StateManager.switchState(m_MainMenu);
@@ -62,3 +60,8 @@ void Game::processEvents() {
   }
 }
 
+void Game::moveToPlayArena() {
+  m_GameState = new GameState(&m_Window, this);
+  m_StateManager.switchState(m_GameState);
+  m_Logger.info("Moved to play arena");
+}

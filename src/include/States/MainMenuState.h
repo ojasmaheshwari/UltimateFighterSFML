@@ -8,21 +8,26 @@
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Audio.hpp>
 
+class Game;
+
 class MainMenuState : public BaseState {
 public:
-  MainMenuState(sf::RenderWindow *window);
+  MainMenuState(sf::RenderWindow *window, Game *game);
   ~MainMenuState();
   void processEvents(sf::Event &event) override;
   void draw() override;
   void update() override;
+  void closeState() override;
 
   void removeChoiceStyling(uint32_t index);
   void addChoiceStyling(uint32_t index);
   void moveChoiceDown();
   void moveChoiceUp();
+  void doAction(uint32_t index);
 
 private:
   sf::RenderWindow *m_Window;
+  Game* m_Game;
   sf::RectangleShape m_Background;
   sf::Texture m_BackgroundTexture;
   sf::Font m_MenuFont;
