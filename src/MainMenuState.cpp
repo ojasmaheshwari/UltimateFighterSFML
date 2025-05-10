@@ -19,12 +19,16 @@ MainMenuState::MainMenuState(sf::RenderWindow *window, Game *game)
       m_Logger(LoggingLevel::LogLevelInfo, "MainMenuState"),
 			m_MenuFont("assets/fonts/roboto-basic.ttf"),
       m_MenuHeading(m_MenuFont, "Main Menu", 100),
-			m_MenuChoices({
-					sf::Text(m_MenuFont, "Play", 60),
-					sf::Text(m_MenuFont, "Help", 60),
-					sf::Text(m_MenuFont, "Quit", 60),
-			})
+			m_MenuChoiceChangeSound(m_MenuChoiceChangeSoundBuffer)
 {
+	m_MenuChoices = {{
+    sf::Text(m_MenuFont, "Play", 60),
+    sf::Text(m_MenuFont, "Help", 60),
+    sf::Text(m_MenuFont, "Quit", 60),
+	}};
+
+	auto menuChoices = m_MenuChoices.value();
+
   if (!m_BackgroundTexture.loadFromFile("assets/menu_background.png")) {
     m_Logger.error("Unable to load resource: assets/menu_background.png");
   }
@@ -45,16 +49,16 @@ MainMenuState::MainMenuState(sf::RenderWindow *window, Game *game)
   m_ChoiceCount = 3;
   m_SelectedChoiceIndex = 0;
   for (uint32_t i = 0; i < m_ChoiceCount; i++) {
-    m_MenuChoices[i].setOrigin(m_MenuChoices[i].getGlobalBounds().size /
+  	menuChoices[i].setOrigin(menuChoices[i].getGlobalBounds().size /
                                2.f);
 
-    m_MenuChoices[i].setPosition({
+    menuChoices[i].setPosition({
 				(20 / 100.0f) * m_Window->getSize().x,
 				static_cast<float>(initialChoiceY + i * gapBetweenChoices)
 		});
   }
 
-  m_MenuChoices[m_SelectedChoiceIndex].setFillColor(sf::Color::Red);
+  menuChoices[m_SelectedChoiceIndex].setFillColor(sf::Color::Red);
 
   m_Logger.info("Set menu choices");
 
@@ -69,34 +73,21 @@ MainMenuState::MainMenuState(sf::RenderWindow *window, Game *game)
   }
   m_MenuChoiceChangeSound.setBuffer(m_MenuChoiceChangeSoundBuffer);
 }
+
 MainMenuState::~MainMenuState() {}
 
-void MainMenuState::processEvents(sf::Event &event) {
-  switch (event.type) {
-  case sf::Event::KeyPressed: {
-    auto key = event.key.code;
-    switch (key) {
-    case sf::Keyboard::Key::Down:
-      moveChoiceDown();
-      break;
+void MainMenuState::processEvents(const sf::Event &event) {
+	if (const auto* keyPressed = event.getIf<sf::Event::KeyPressed>()) {
+		const auto key = keyPressed->scancode;
+		using KeyCode = sf::Keyboard::Scancode;
 
-    case sf::Keyboard::Key::Up:
-      moveChoiceUp();
-      break;
-
-    case sf::Keyboard::Key::Enter:
-      doAction(m_SelectedChoiceIndex);
-:
-    default:
-      break;
-    }
-  }
-  default:
-    break;
-  }
-
-	if (event.is<sf::Event::KeyPressed>()) {
-
+		if (key == KeyCode::Down) {
+			moveChoiceDown();
+		} else if (key == KeyCode::Up) {
+			moveChoiceUp();
+		} else if (key == KeyCode::Enter) {
+			doAction(m_SelectedChoiceIndex);
+		}
 	} else {
 		m_Logger.warn("Unhandled event");
 	}
@@ -104,32 +95,37 @@ void MainMenuState::processEvents(sf::Event &event) {
 }
 
 void MainMenuState::draw() {
+	auto menuChoices = m_MenuChoices.value();
   m_Window->draw(m_Background);
-  m_Window->draw(m_MenuHeading);
+		m_Window->draw(m_MenuHeading);
 
-  for (auto &menuChoice : m_MenuChoices) {
+  for (auto &menuChoice : menuChoices) {
     m_Window->draw(menuChoice);
   }
 }
+
 void MainMenuState::update() {}
 
 void MainMenuState::removeChoiceStyling(uint32_t index) {
+	auto menuChoices = m_MenuChoices.value();
+
   if (index < 0 || index >= m_ChoiceCount) {
     m_Logger.error("Tried to remove out-of-bounds choice");
     return;
   }
 
-  sf::Text &currentSelectedChoice = m_MenuChoices[index];
+  sf::Text &currentSelectedChoice = menuChoices[index];
   currentSelectedChoice.setFillColor(sf::Color::White);
 }
 
 void MainMenuState::addChoiceStyling(uint32_t index) {
+	auto menuChoices = m_MenuChoices.value();
   if (index < 0 || index >= m_ChoiceCount) {
     m_Logger.error("Tried to remove out-of-bounds choice");
     return;
   }
 
-  sf::Text &currentSelectedChoice = m_MenuChoices[index];
+  sf::Text &currentSelectedChoice = menuChoices[index];
   currentSelectedChoice.setFillColor(sf::Color::Red);
 }
 
@@ -160,12 +156,15 @@ void MainMenuState::moveChoiceUp() {
 }
 
 void MainMenuState::doAction(uint32_t index) {
+	auto menuChoices = m_MenuChoices.value();
+
   if (index < 0 || index >= m_ChoiceCount) {
     m_Logger.error("Tried to remove out-of-bounds choice");
     return;
   }
 
-  sf::Text &action = m_MenuChoices[index];
+  sf::Text &action = menuChoices[index];
+
   if (action.getString() == "Play") {
     m_Game->moveToPlayArena();
   } else if (action.getString() == "Help") {

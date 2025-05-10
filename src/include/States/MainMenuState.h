@@ -8,6 +8,8 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Graphics/Font.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
+#include <SFML/Graphics/Text.hpp>
+#include <array>
 
 class Game;
 
@@ -15,7 +17,7 @@ class MainMenuState : public BaseState {
 public:
   MainMenuState(sf::RenderWindow *window, Game *game);
 	~MainMenuState();
-  void processEvents(sf::Event &event) override;
+  void processEvents(const sf::Event &event) override;
   void draw() override;
   void update() override;
   void closeState() override;
@@ -40,5 +42,5 @@ private:
   uint32_t m_SelectedChoiceIndex;
   uint32_t m_ChoiceCount;
 
-  sf::Text m_MenuChoices[3];
+	std::optional<std::array<sf::Text, 3>> m_MenuChoices;
 };

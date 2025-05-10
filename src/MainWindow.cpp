@@ -5,5 +5,5 @@
 
 MainWindow::MainWindow() {}
 MainWindow::MainWindow(const uint32_t width, const uint32_t height, const std::string &title)
-  : sf::RenderWindow(sf::VideoMode(width, height), title)
+  : sf::RenderWindow(sf::VideoMode({width, height}), title)
   {}
