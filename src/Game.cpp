@@ -7,10 +7,9 @@
 #include <SFML/Window/Event.hpp>
 #include <SFML/Window/Keyboard.hpp>
 
-
 Game::Game()
-  :m_Window(1000, 550, "Ultimate Fighter 2024"), m_Running(true), m_Logger(LoggingLevel::LogLevelInfo, "Game")
-{
+    : m_Window(1000, 550, "Ultimate Fighter 2024"), m_Running(true),
+      m_Logger(LoggingLevel::LogLevelInfo, "Game") {
   m_Logger.log("Initialized main window");
 
   m_MainMenu = new MainMenuState(&m_Window, this);
@@ -20,13 +19,9 @@ Game::Game()
   m_Logger.log("State switced to main menu");
 }
 
-Game::~Game() {
-  m_Logger.log("Destroying Game");
-}
+Game::~Game() { m_Logger.log("Destroying Game"); }
 
-bool Game::isRunning() const {
-  return m_Running;
-}
+bool Game::isRunning() const { return m_Running; }
 
 void Game::quit() {
   if (m_Window.isOpen())
@@ -36,9 +31,7 @@ void Game::quit() {
   m_Logger.log("Main window closed.");
 }
 
-void Game::update() {
-  m_StateManager.getCurrentState()->update();
-}
+void Game::update() { m_StateManager.getCurrentState()->update(); }
 
 void Game::draw() {
   m_Window.clear();
@@ -47,15 +40,11 @@ void Game::draw() {
 }
 
 void Game::processEvents() {
-  while (m_Window.pollEvent(m_MainEvent)) {
-    m_StateManager.getCurrentState()->processEvents(m_MainEvent);
+  while (const std::optional event = m_Window.pollEvent()) {
+    m_StateManager.getCurrentState()->processEvents(*event);
 
-    switch(m_MainEvent.type) {
-      case sf::Event::Closed:
-        quit();
-        break;
-      default:
-        break;
+    if (event->is<sf::Event::Closed>()) {
+      quit();
     }
   }
 }

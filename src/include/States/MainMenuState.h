@@ -3,17 +3,18 @@
 #include "../BaseState.h"
 #include "../utils/Logging.h"
 
+#include <SFML/Audio.hpp>
 #include <SFML/Audio/SoundBuffer.hpp>
 #include <SFML/Graphics.hpp>
+#include <SFML/Graphics/Font.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
-#include <SFML/Audio.hpp>
 
 class Game;
 
 class MainMenuState : public BaseState {
 public:
   MainMenuState(sf::RenderWindow *window, Game *game);
-  ~MainMenuState();
+	~MainMenuState();
   void processEvents(sf::Event &event) override;
   void draw() override;
   void update() override;
@@ -27,7 +28,7 @@ public:
 
 private:
   sf::RenderWindow *m_Window;
-  Game* m_Game;
+  Game *m_Game;
   sf::RectangleShape m_Background;
   sf::Texture m_BackgroundTexture;
   sf::Font m_MenuFont;
