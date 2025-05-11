@@ -25,4 +25,5 @@ private:
   MainMenuState *m_MainMenu;
   GameState *m_GameState;
   Logging m_Logger;
+	sf::Clock m_DeltaClock;
 };

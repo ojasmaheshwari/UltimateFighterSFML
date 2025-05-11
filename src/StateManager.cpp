@@ -2,8 +2,6 @@
 #include "include/BaseState.h"
 #include "include/utils/Logging.h"
 
-#include <iostream>
-
 StateManager::StateManager()
   : m_CurrentState(nullptr), m_Logger(LoggingLevel::LogLevelInfo, "StateManager")
 {}

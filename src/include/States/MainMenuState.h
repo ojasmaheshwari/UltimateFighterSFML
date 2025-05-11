@@ -41,6 +41,7 @@ private:
   Logging m_Logger;
   uint32_t m_SelectedChoiceIndex;
   uint32_t m_ChoiceCount;
+	sf::Clock m_DeltaClock;
 
 	std::optional<std::array<sf::Text, 3>> m_MenuChoices;
 };

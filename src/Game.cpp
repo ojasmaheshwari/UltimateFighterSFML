@@ -7,9 +7,13 @@
 #include <SFML/Window/Event.hpp>
 #include <SFML/Window/Keyboard.hpp>
 
+#include <imgui.h>
+#include <imgui-SFML.h>
+
 Game::Game()
     : m_Window(1000, 550, "Ultimate Fighter 2024"), m_Running(true),
-      m_Logger(LoggingLevel::LogLevelInfo, "Game") {
+      m_Logger(LoggingLevel::LogLevelInfo, "Game")
+{
   m_Logger.log("Initialized main window");
 
   m_MainMenu = new MainMenuState(&m_Window, this);
@@ -34,13 +38,19 @@ void Game::quit() {
 void Game::update() { m_StateManager.getCurrentState()->update(); }
 
 void Game::draw() {
+	m_Logger.info("Game drawing");
   m_Window.clear();
   m_StateManager.getCurrentState()->draw();
+	ImGui::SFML::Render(m_Window);
   m_Window.display();
 }
 
 void Game::processEvents() {
+	m_Logger.error("processEvents");
   while (const std::optional event = m_Window.pollEvent()) {
+		ImGui::SFML::ProcessEvent(m_Window, *event);
+
+
     m_StateManager.getCurrentState()->processEvents(*event);
 
     if (event->is<sf::Event::Closed>()) {

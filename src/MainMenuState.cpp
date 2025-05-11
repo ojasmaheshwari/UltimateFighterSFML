@@ -13,6 +13,9 @@
 
 #include "include/Game.h"
 
+#include <imgui.h>
+#include <imgui-SFML.h>
+
 MainMenuState::MainMenuState(sf::RenderWindow *window, Game *game)
     : m_Window(window), m_Game(game),
       m_Background((sf::Vector2f)m_Window->getSize()),
@@ -92,8 +95,17 @@ void MainMenuState::processEvents(const sf::Event &event) {
 }
 
 void MainMenuState::draw() {
+	m_Logger.log("drawing", LoggingLevel::LogLevelInfo);
+	ImGui::SFML::Update(*m_Window, m_DeltaClock.restart());
+
+	ImGui::ShowDemoWindow();
+
+	ImGui::Begin("Hello, world!");
+	ImGui::Button("Look at this pretty button");
+	ImGui::End();
+
   m_Window->draw(m_Background);
-		m_Window->draw(m_MenuHeading);
+	m_Window->draw(m_MenuHeading);
 
   for (auto &menuChoice : *m_MenuChoices) {
     m_Window->draw(menuChoice);
