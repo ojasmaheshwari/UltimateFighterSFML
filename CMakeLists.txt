@@ -7,7 +7,12 @@ set(INCLUDES src/includes)
 set(CMAKE_BUILD_TYPE Debug)
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(main ${SOURCES})
-target_include_directories(main PRIVATE ${INCLUDES})
-target_link_libraries(main PRIVATE sfml-system sfml-graphics sfml-audio sfml-network sfml-window)
+set(PROJECT_NAME UltimateFighter)
+
+file(COPY assets DESTINATION "${CMAKE_CURRENT_BINARY_DIR}")
+
+add_executable(${PROJECT_NAME} ${SOURCES})
+
+target_include_directories(${PROJECT_NAME} PRIVATE ${INCLUDES})
+target_link_libraries(${PROJECT_NAME} PRIVATE sfml-system sfml-graphics sfml-audio sfml-network sfml-window)
 

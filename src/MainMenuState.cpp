@@ -27,17 +27,15 @@ MainMenuState::MainMenuState(sf::RenderWindow *window, Game *game)
     sf::Text(m_MenuFont, "Quit", 60),
 	}};
 
-	auto menuChoices = m_MenuChoices.value();
-
-  if (!m_BackgroundTexture.loadFromFile("assets/menu_background.png")) {
-    m_Logger.error("Unable to load resource: assets/menu_background.png");
+  if (!m_BackgroundTexture.loadFromFile("assets/menu_background.jpg")) {
+    m_Logger.error("Unable to load resource: assets/menu_background.jpg");
   }
 
   m_Background.setTexture(&m_BackgroundTexture);
   m_Logger.log("Set menu background");
 
-  if (!m_MenuFont.openFromFile("assets/menu_font.otf")) {
-    m_Logger.error("Unable to load resource: assets/menu_font.otf");
+  if (!m_MenuFont.openFromFile("assets/fonts/roboto-basic.ttf")) {
+    m_Logger.error("Unable to load resource: assets/fonts/roboto-basic.ttf");
   }
 
   m_MenuHeading.setOrigin(m_MenuHeading.getGlobalBounds().size / 2.f);
@@ -49,16 +47,16 @@ MainMenuState::MainMenuState(sf::RenderWindow *window, Game *game)
   m_ChoiceCount = 3;
   m_SelectedChoiceIndex = 0;
   for (uint32_t i = 0; i < m_ChoiceCount; i++) {
-  	menuChoices[i].setOrigin(menuChoices[i].getGlobalBounds().size /
+  	m_MenuChoices->at(i).setOrigin(m_MenuChoices->at(i).getGlobalBounds().size /
                                2.f);
 
-    menuChoices[i].setPosition({
+    m_MenuChoices->at(i).setPosition({
 				(20 / 100.0f) * m_Window->getSize().x,
 				static_cast<float>(initialChoiceY + i * gapBetweenChoices)
 		});
   }
 
-  menuChoices[m_SelectedChoiceIndex].setFillColor(sf::Color::Red);
+  m_MenuChoices->at(m_SelectedChoiceIndex).setFillColor(sf::Color::Red);
 
   m_Logger.info("Set menu choices");
 
@@ -89,17 +87,15 @@ void MainMenuState::processEvents(const sf::Event &event) {
 			doAction(m_SelectedChoiceIndex);
 		}
 	} else {
-		m_Logger.warn("Unhandled event");
 	}
 
 }
 
 void MainMenuState::draw() {
-	auto menuChoices = m_MenuChoices.value();
   m_Window->draw(m_Background);
 		m_Window->draw(m_MenuHeading);
 
-  for (auto &menuChoice : menuChoices) {
+  for (auto &menuChoice : *m_MenuChoices) {
     m_Window->draw(menuChoice);
   }
 }
@@ -107,25 +103,22 @@ void MainMenuState::draw() {
 void MainMenuState::update() {}
 
 void MainMenuState::removeChoiceStyling(uint32_t index) {
-	auto menuChoices = m_MenuChoices.value();
-
   if (index < 0 || index >= m_ChoiceCount) {
     m_Logger.error("Tried to remove out-of-bounds choice");
     return;
   }
 
-  sf::Text &currentSelectedChoice = menuChoices[index];
+  sf::Text &currentSelectedChoice = m_MenuChoices->at(index);
   currentSelectedChoice.setFillColor(sf::Color::White);
 }
 
 void MainMenuState::addChoiceStyling(uint32_t index) {
-	auto menuChoices = m_MenuChoices.value();
   if (index < 0 || index >= m_ChoiceCount) {
     m_Logger.error("Tried to remove out-of-bounds choice");
     return;
   }
 
-  sf::Text &currentSelectedChoice = menuChoices[index];
+  sf::Text &currentSelectedChoice = m_MenuChoices->at(index);
   currentSelectedChoice.setFillColor(sf::Color::Red);
 }
 
@@ -156,14 +149,12 @@ void MainMenuState::moveChoiceUp() {
 }
 
 void MainMenuState::doAction(uint32_t index) {
-	auto menuChoices = m_MenuChoices.value();
-
   if (index < 0 || index >= m_ChoiceCount) {
     m_Logger.error("Tried to remove out-of-bounds choice");
     return;
   }
 
-  sf::Text &action = menuChoices[index];
+  sf::Text &action = m_MenuChoices->at(index);
 
   if (action.getString() == "Play") {
     m_Game->moveToPlayArena();
