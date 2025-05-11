@@ -14,8 +14,8 @@ GameState::GameState(sf::RenderWindow *window, Game *game)
 			m_Fighter1(m_Fighter1Texture)
 
 {
-  if (!m_ArenaTexture.loadFromFile("assets/arena_background.png")) {
-    m_Logger.error("Unable to load resource: assets/arena_background.png");
+  if (!m_ArenaTexture.loadFromFile("assets/arena_background.jpg")) {
+    m_Logger.error("Unable to load resource: assets/arena_background.jpg");
   }
   m_ArenaBackground.setTexture(&m_ArenaTexture);
 
@@ -23,17 +23,26 @@ GameState::GameState(sf::RenderWindow *window, Game *game)
     m_Logger.error("Unable to load resource: assets/fighter_1_sprite.png");
   }
 
-  sf::Vector2u fighter1TextureSize = m_Fighter1Texture.getSize();
-  fighter1TextureSize.x /= 4;
+	m_ArenaGround.setFillColor(sf::Color::Transparent);
+  m_ArenaGround.setPosition({0,
+                            m_Window->getSize().y - m_ArenaGround.getSize().y});
 
+  sf::Vector2u fighter1TextureSize = m_Fighter1Texture.getSize();
+  fighter1TextureSize.x /= 12;
+	fighter1TextureSize.x -= 2;
+
+	fighter1TextureSize.y /= 5;
+	fighter1TextureSize.y -= 15;
+
+	m_Fighter1.setScale({4.0f, 4.0f});
   m_Fighter1.setTexture(m_Fighter1Texture);
   m_Fighter1.setTextureRect(
       sf::IntRect({static_cast<int>(fighter1TextureSize.x * 0), static_cast<int>(fighter1TextureSize.y * 0)},
 									{static_cast<int>(fighter1TextureSize.x), static_cast<int>(fighter1TextureSize.y)}));
 
+
   // m_Fighter1.setPosition(22, m_Window->getSize().y - 66);
-  m_Fighter1.setPosition({0, m_Window->getSize().y - m_ArenaGround.getSize().y -
-                             m_Fighter1.getLocalBounds().size.y + 10});
+  m_Fighter1.setPosition({60, m_ArenaGround.getPosition().y - m_Fighter1.getGlobalBounds().size.y});
 
   m_Logger.info(std::format("Global bounds are {}x{}, local bounds are {}x{}",
                             m_Fighter1.getGlobalBounds().size.x,
@@ -41,14 +50,6 @@ GameState::GameState(sf::RenderWindow *window, Game *game)
                             m_Fighter1.getLocalBounds().size.x,
                             m_Fighter1.getLocalBounds().size.y));
 
-	if (m_ArenaGroundTexture.loadFromFile("assets/arena_ground.png")) {
-		m_Logger.info("Arena ground texture loaded successfully");
-	} else {
-		m_Logger.error("Could not load arena ground texture");
-	}
-  m_ArenaGround.setTexture(&m_ArenaGroundTexture);
-  m_ArenaGround.setPosition({0,
-                            m_Window->getSize().y - m_ArenaGround.getSize().y});
 }
 
 GameState::~GameState() {}
