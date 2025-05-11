@@ -21,6 +21,12 @@ Game::Game()
 
   m_StateManager.switchState(m_MainMenu);
   m_Logger.log("State switced to main menu");
+
+	if (ImGui::SFML::Init(m_Window)) {
+		m_Logger.info("ImGui SFML successfully initialized!");
+	} else {
+		m_Logger.error("ImGui SFML initialization failed!");
+	}
 }
 
 Game::~Game() { m_Logger.log("Destroying Game"); }
@@ -38,7 +44,6 @@ void Game::quit() {
 void Game::update() { m_StateManager.getCurrentState()->update(); }
 
 void Game::draw() {
-	m_Logger.info("Game drawing");
   m_Window.clear();
   m_StateManager.getCurrentState()->draw();
 	ImGui::SFML::Render(m_Window);
@@ -46,7 +51,6 @@ void Game::draw() {
 }
 
 void Game::processEvents() {
-	m_Logger.error("processEvents");
   while (const std::optional event = m_Window.pollEvent()) {
 		ImGui::SFML::ProcessEvent(m_Window, *event);
 
