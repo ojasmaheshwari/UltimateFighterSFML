@@ -1,10 +1,14 @@
 #include "include/States/GameState.h"
 
 #include "include/Game.h"
+#include "include/ImguiDebugger.h"
 #include "include/utils/Logging.h"
+
 #include <SFML/Graphics/Color.hpp>
 #include <SFML/Graphics/Rect.hpp>
 #include <format>
+
+#include <imgui-SFML.h>
 
 GameState::GameState(sf::RenderWindow *window, Game *game)
     : m_Window(window), m_Game(game),
@@ -55,9 +59,15 @@ GameState::GameState(sf::RenderWindow *window, Game *game)
 GameState::~GameState() {}
 
 void GameState::draw() {
+	showDebugWindow(*m_Window, m_DeltaClock);
+
   m_Window->draw(m_ArenaBackground);
   m_Window->draw(m_Fighter1);
   m_Window->draw(m_ArenaGround);
+
+#ifdef DEBUG
+	ImGui::SFML::Render(*m_Window);
+#endif
 }
 void GameState::update() {}
 void GameState::processEvents(const sf::Event &event) {}

@@ -1,4 +1,5 @@
 #include "include/Game.h"
+#include "include/ImguiDebugger.h"
 #include "include/StateManager.h"
 #include "include/States/GameState.h"
 #include "include/States/MainMenuState.h"
@@ -46,14 +47,13 @@ void Game::update() { m_StateManager.getCurrentState()->update(); }
 void Game::draw() {
   m_Window.clear();
   m_StateManager.getCurrentState()->draw();
-	ImGui::SFML::Render(m_Window);
+
   m_Window.display();
 }
 
 void Game::processEvents() {
   while (const std::optional event = m_Window.pollEvent()) {
 		ImGui::SFML::ProcessEvent(m_Window, *event);
-
 
     m_StateManager.getCurrentState()->processEvents(*event);
 

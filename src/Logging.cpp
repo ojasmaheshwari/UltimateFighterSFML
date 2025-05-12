@@ -2,6 +2,7 @@
 #include "include/utils/AsciiColor.h"
 
 #include <format>
+#include <string>
 
 
 Logging::Logging()
@@ -17,8 +18,16 @@ void Logging::setLoggingLevel(LoggingLevel loggingLevel) {
   m_LoggingLevel = loggingLevel;
 }
 
+void Logging::setClassName(const std::string &className) {
+	m_ClassName = className;
+}
+
 LoggingLevel Logging::getLoggingLevel() const {
   return m_LoggingLevel;
+}
+
+std::string Logging::getClassName() const {
+	return m_ClassName;
 }
 
 void Logging::log(const std::string &message, LoggingLevel loggingLevel) {

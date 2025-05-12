@@ -29,4 +29,5 @@ private:
   sf::Sprite m_Fighter1;
   sf::Texture m_Fighter1Texture;
   sf::Texture m_ArenaGroundTexture;
+	sf::Clock m_DeltaClock;
 };

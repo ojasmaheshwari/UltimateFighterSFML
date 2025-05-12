@@ -11,8 +11,13 @@ public:
   Logging();
   ~Logging();
   Logging(LoggingLevel loggingLevel, const std::string &className);
+
   LoggingLevel getLoggingLevel() const;
+	std::string getClassName() const;
+
   void setLoggingLevel(LoggingLevel loggingLevel);
+	void setClassName(const std::string& className);
+
   void log(const std::string &message);
   void log(const std::string &message, LoggingLevel loggingLevel);
   void info(const std::string &message);
@@ -20,5 +25,5 @@ public:
   void error(const std::string &message);
 private:
   LoggingLevel m_LoggingLevel;
-  const std::string m_ClassName;
+  std::string m_ClassName;
 };
