@@ -1,4 +1,5 @@
 #include "include/Game.h"
+#include "SFML/Window/Window.hpp"
 #include "include/ImguiDebugger.h"
 #include "include/StateManager.h"
 #include "include/States/GameState.h"
@@ -15,6 +16,8 @@ Game::Game()
     : m_Window(1000, 550, "Ultimate Fighter 2024"), m_Running(true),
       m_Logger(LoggingLevel::LogLevelInfo, "Game")
 {
+	m_Window.setFramerateLimit(60);
+
   m_Logger.log("Initialized main window");
 
   m_MainMenu = new MainMenuState(&m_Window, this);

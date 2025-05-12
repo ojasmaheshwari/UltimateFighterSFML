@@ -2,11 +2,14 @@
 
 #include "../BaseState.h"
 #include "../utils/Logging.h"
+#include "SFML/System/Vector2.hpp"
 
 #include <SFML/Graphics.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 
+#include "../DebuggerControlledInformation.h"
+#include "imgui.h"
 
 class Game;
 
@@ -30,4 +33,9 @@ private:
   sf::Texture m_Fighter1Texture;
   sf::Texture m_ArenaGroundTexture;
 	sf::Clock m_DeltaClock;
+
+	sf::Vector2f m_Fighter1Pos;
+	DebuggerControlledInformation m_DCI;
+
+	ImGuiIO &m_ImGuiIO;
 };

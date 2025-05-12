@@ -27,6 +27,7 @@ MainMenuState::MainMenuState(sf::RenderWindow *window, Game *game)
       m_MenuHeading(m_MenuFont, "Main Menu", 100),
 			m_MenuChoiceChangeSound(m_MenuChoiceChangeSoundBuffer)
 {
+	m_Window->setFramerateLimit(60);
 
 	m_MenuChoices = {{
     sf::Text(m_MenuFont, "Play", 60),
