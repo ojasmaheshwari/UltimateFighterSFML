@@ -1,5 +1,10 @@
 #include "include/States/GameState.h"
 
+#include "SFML/Graphics/Sprite.hpp"
+#include "SFML/System/Sleep.hpp"
+#include "SFML/System/Time.hpp"
+#include "SFML/Window/Event.hpp"
+#include "SFML/Window/Keyboard.hpp"
 #include "imgui.h"
 #include "include/Game.h"
 #include "include/ImguiDebugger.h"
@@ -13,6 +18,10 @@
 
 #include "include/DebuggerControlledInformation.h"
 
+#include <chrono>
+
+static sf::Time dt;
+
 GameState::GameState(sf::RenderWindow *window, Game *game)
     : m_Window(window), m_Game(game),
       m_ArenaBackground((sf::Vector2f)m_Window->getSize()),
@@ -22,6 +31,11 @@ GameState::GameState(sf::RenderWindow *window, Game *game)
 			m_ImGuiIO(ImGui::GetIO())
 {
 	m_Window->setFramerateLimit(60);
+
+	m_dMovement.right = 20.0f;
+	m_dMovement.left = 20.0f;
+	m_dMovement.up = 0.0f;
+	m_dMovement.down = 0.0f;
 
   if (!m_ArenaTexture.loadFromFile("assets/arena_background.jpg")) {
     m_Logger.error("Unable to load resource: assets/arena_background.jpg");
@@ -78,7 +92,48 @@ void GameState::draw() {
 	ImGui::SFML::Render(*m_Window);
 #endif
 }
+
 void GameState::update() {}
-void GameState::processEvents(const sf::Event &event) {}
+
+void GameState::processEvents(const sf::Event &event) {
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D)) {
+		m_Fighter1Pos.x += m_dMovement.right;
+	} else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A)) {
+		m_Fighter1Pos.x -= m_dMovement.left;
+	} else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::X)) {
+		Attack(m_Fighter1, m_Fighter1Texture, 2, 0, 12, 5);
+	}
+}
+
+void GameState::Attack(sf::Sprite &player, sf::Texture &textureSheet, int x_index, int y_index, int num_x, int num_y, int duration, int damage) {
+	sf::Vector2 TextureSize = textureSheet.getSize();
+	TextureSize.x /= num_x;
+	TextureSize.x -= 3;
+
+	TextureSize.y /= num_y;
+	TextureSize.y -= 12;
+
+  m_Fighter1.setTexture(textureSheet);
+	m_Fighter1.setTextureRect(
+		sf::IntRect(
+			{static_cast<int>(TextureSize.x * x_index), static_cast<int>(TextureSize.y * y_index)},
+			{static_cast<int>(player.getLocalBounds().size.x), static_cast<int>(player.getLocalBounds().size.y)}
+		)
+	);
+
+	dt = m_DeltaClock.getElapsedTime();
+
+	while (m_DeltaClock.getElapsedTime() - dt < sf::Time(sf::milliseconds(1000))) {
+	}
+
+  m_Fighter1.setTexture(textureSheet);
+	m_Fighter1.setTextureRect(
+		sf::IntRect(
+			{static_cast<int>(TextureSize.x * 0), static_cast<int>(TextureSize.y * 0)},
+			{static_cast<int>(player.getLocalBounds().size.x), static_cast<int>(player.getLocalBounds().size.y)}
+		)
+	);
+
+}
 
 void GameState::closeState() {}

@@ -13,6 +13,13 @@
 
 class Game;
 
+struct PlayerMovementDerivatives {
+	float right;
+	float left;
+	float up;
+	float down;
+};
+
 class GameState : public BaseState {
 public:
   GameState(sf::RenderWindow *window, Game *game);
@@ -38,4 +45,13 @@ private:
 	DebuggerControlledInformation m_DCI;
 
 	ImGuiIO &m_ImGuiIO;
+
+	PlayerMovementDerivatives m_dMovement;
+
+	/*
+	 * num_x = number of sprites in x-axis
+	 *
+	 * num_y = number of sprites in y-axis
+	*/
+	void Attack(sf::Sprite &player, sf::Texture &textureSheet, int x_index, int y_index, int num_x, int num_y, int duration = 500 /* ms */, int damage = 20);
 };

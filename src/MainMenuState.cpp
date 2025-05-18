@@ -1,5 +1,4 @@
 #include "include/States/MainMenuState.h"
-#include "include/ImguiDebugger.h"
 #include "include/utils/Logging.h"
 
 #include <SFML/Audio.hpp>
@@ -17,14 +16,11 @@
 #include <imgui.h>
 #include <imgui-SFML.h>
 
-#include "include/ImguiDebugger.h"
-
 MainMenuState::MainMenuState(sf::RenderWindow *window, Game *game)
     : m_Window(window), m_Game(game),
       m_Background((sf::Vector2f)m_Window->getSize()),
       m_Logger(LoggingLevel::LogLevelInfo, "MainMenuState"),
-			m_MenuFont("assets/fonts/roboto-basic.ttf"),
-      m_MenuHeading(m_MenuFont, "Main Menu", 100),
+      m_MenuHeading(m_MenuFont, "Rocky Balboa", 100),
 			m_MenuChoiceChangeSound(m_MenuChoiceChangeSoundBuffer)
 {
 	m_Window->setFramerateLimit(60);
@@ -42,7 +38,7 @@ MainMenuState::MainMenuState(sf::RenderWindow *window, Game *game)
   m_Background.setTexture(&m_BackgroundTexture);
   m_Logger.log("Set menu background");
 
-  if (!m_MenuFont.openFromFile("assets/fonts/roboto-basic.ttf")) {
+  if (!m_MenuFont.openFromFile("assets/fonts/FranklinGothic.ttf")) {
     m_Logger.error("Unable to load resource: assets/fonts/roboto-basic.ttf");
   }
 
