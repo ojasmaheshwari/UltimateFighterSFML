@@ -1,4 +1,4 @@
-#include "include/States/GameState.h"
+#include <States/GameState.h>
 
 #include "SFML/Graphics/Sprite.hpp"
 #include "SFML/System/Sleep.hpp"
@@ -6,9 +6,9 @@
 #include "SFML/Window/Event.hpp"
 #include "SFML/Window/Keyboard.hpp"
 #include "imgui.h"
-#include "include/Game.h"
-#include "include/ImguiDebugger.h"
-#include "include/utils/Logging.h"
+#include <Game.h>
+#include <ImguiDebugger.h>
+#include <utils/Logging.h>
 
 #include <SFML/Graphics/Color.hpp>
 #include <SFML/Graphics/Rect.hpp>
@@ -16,9 +16,8 @@
 
 #include <imgui-SFML.h>
 
-#include "include/DebuggerControlledInformation.h"
+#include <DebuggerControlledInformation.h>
 
-#include <chrono>
 
 static sf::Time dt;
 

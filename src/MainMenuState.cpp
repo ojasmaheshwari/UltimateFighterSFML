@@ -1,5 +1,5 @@
-#include "include/States/MainMenuState.h"
-#include "include/utils/Logging.h"
+#include <States/MainMenuState.h>
+#include <utils/Logging.h>
 
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics/Color.hpp>
@@ -11,7 +11,7 @@
 #include <SFML/Window/Keyboard.hpp>
 #include <cstdint>
 
-#include "include/Game.h"
+#include <Game.h>
 
 #include <imgui.h>
 #include <imgui-SFML.h>

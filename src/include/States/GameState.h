@@ -1,15 +1,15 @@
 #pragma once
 
-#include "../BaseState.h"
-#include "../utils/Logging.h"
-#include "SFML/System/Vector2.hpp"
+#include <BaseState.h>
+#include <utils/Logging.h>
+#include <SFML/System/Vector2.hpp>
 
 #include <SFML/Graphics.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 
-#include "../DebuggerControlledInformation.h"
-#include "imgui.h"
+#include <DebuggerControlledInformation.h>
+#include <imgui.h>
 
 class Game;
 

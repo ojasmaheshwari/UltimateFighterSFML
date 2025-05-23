@@ -1,10 +1,8 @@
-#include "include/Game.h"
-#include "SFML/Window/Window.hpp"
-#include "include/ImguiDebugger.h"
-#include "include/StateManager.h"
-#include "include/States/GameState.h"
-#include "include/States/MainMenuState.h"
-#include "include/utils/Logging.h"
+#include <Game.h>
+#include <StateManager.h>
+#include <States/GameState.h>
+#include <States/MainMenuState.h>
+#include <utils/Logging.h>
 
 #include <SFML/Window/Event.hpp>
 #include <SFML/Window/Keyboard.hpp>

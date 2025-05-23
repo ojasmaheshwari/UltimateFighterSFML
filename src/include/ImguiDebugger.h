@@ -1,9 +1,9 @@
 #pragma once
 
-#include "DebuggerControlledInformation.h"
-#include "SFML/Graphics/RenderWindow.hpp"
-#include "SFML/System/Clock.hpp"
-#include "utils/Logging.h"
+#include <DebuggerControlledInformation.h>
+#include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/System/Clock.hpp>
+#include <utils/Logging.h>
 
 namespace ImguiDebugger {
 	static Logging logger;

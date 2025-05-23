@@ -1,4 +1,4 @@
-#include "include/MainWindow.h"
+#include <MainWindow.h>
 #include <SFML/System/Vector2.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics.hpp>

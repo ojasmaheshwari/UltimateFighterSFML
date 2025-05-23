@@ -1,6 +1,6 @@
-#include "include/StateManager.h"
-#include "include/BaseState.h"
-#include "include/utils/Logging.h"
+#include <StateManager.h>
+#include <BaseState.h>
+#include <utils/Logging.h>
 
 StateManager::StateManager()
   : m_CurrentState(nullptr), m_Logger(LoggingLevel::LogLevelInfo, "StateManager")

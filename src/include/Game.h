@@ -1,10 +1,10 @@
 #pragma once
 
-#include "MainWindow.h"
-#include "StateManager.h"
-#include "States/GameState.h"
-#include "States/MainMenuState.h"
-#include "utils/Logging.h"
+#include <MainWindow.h>
+#include <StateManager.h>
+#include <States/GameState.h>
+#include <States/MainMenuState.h>
+#include <utils/Logging.h>
 #include <SFML/Window/Event.hpp>
 
 class Game {

@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../BaseState.h"
-#include "../utils/Logging.h"
+#include <BaseState.h>
+#include <utils/Logging.h>
 
 #include <SFML/Audio.hpp>
 #include <SFML/Audio/SoundBuffer.hpp>

@@ -2,8 +2,6 @@
 set(CMAKE_BUILD_TYPE Debug)
 set(CMAKE_CXX_STANDARD 20)
 
-file(COPY ${CMAKE_SOURCE_DIR}/assets DESTINATION "${CMAKE_CURRENT_BINARY_DIR}")
-
 add_executable(${PROJECT_NAME} ${SOURCES})
 target_include_directories(${PROJECT_NAME} PRIVATE ${INCLUDES})
 target_link_libraries(

@@ -1,6 +1,6 @@
 
-#include "include/ImguiDebugger.h"
-#include "include/DebuggerControlledInformation.h"
+#include <ImguiDebugger.h>
+#include <DebuggerControlledInformation.h>
 #include <imgui-SFML.h>
 #include <imgui.h>
 

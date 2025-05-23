@@ -3,7 +3,8 @@ project(UltimateFighter LANGUAGES CXX)
 
 
 file(GLOB_RECURSE SOURCES ${CMAKE_SOURCE_DIR}/src/*.cpp)
-file(GLOB_RECURSE INCLUDES ${CMAKE_SOURCE_DIR}/src/include/)
+# file(GLOB_RECURSE INCLUDES ${CMAKE_SOURCE_DIR}/src/include/)
+set(INCLUDES ${CMAKE_SOURCE_DIR}/src/include)
 
 set(CMAKE_BUILD_TYPE Debug)
 set(CMAKE_CXX_STANDARD 20)
