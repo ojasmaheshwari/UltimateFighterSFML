@@ -5,7 +5,6 @@
 
 #include <iostream>
 
-
 Logging::Logging()
   :m_LoggingLevel(LoggingLevel::LogLevelInfo), m_ClassName("Undefined")
 {}

@@ -20,8 +20,9 @@ MainMenuState::MainMenuState(sf::RenderWindow *window, Game *game)
     : m_Window(window), m_Game(game),
       m_Background((sf::Vector2f)m_Window->getSize()),
       m_Logger(LoggingLevel::LogLevelInfo, "MainMenuState"),
+			m_MenuChoiceChangeSound(m_MenuChoiceChangeSoundBuffer),
       m_MenuHeading(m_MenuFont, "Rocky Balboa", 100),
-			m_MenuChoiceChangeSound(m_MenuChoiceChangeSoundBuffer)
+			m_MenuSubHeading(m_MenuFont, "In the 90s", 40)
 {
 	m_Window->setFramerateLimit(60);
 
@@ -45,6 +46,13 @@ MainMenuState::MainMenuState(sf::RenderWindow *window, Game *game)
   m_MenuHeading.setOrigin(m_MenuHeading.getGlobalBounds().size / 2.f);
   m_MenuHeading.setPosition({m_Window->getSize().x / 2.f,
                             (10 / 100.0f) * m_Window->getSize().y});
+	m_MenuHeading.setOutlineColor(sf::Color::Blue);
+	m_MenuHeading.setOutlineThickness(1);
+
+	m_MenuSubHeading.setOrigin(m_MenuSubHeading.getGlobalBounds().size / 2.f);
+	m_MenuSubHeading.setPosition({ m_MenuHeading.getPosition().x, m_MenuHeading.getPosition().y + 80 });
+	m_MenuSubHeading.setOutlineColor(sf::Color::Red);
+	m_MenuSubHeading.setOutlineThickness(1);
 
   uint32_t initialChoiceY = (50 / 100.0f) * m_Window->getSize().y;
   uint32_t gapBetweenChoices = 100;
@@ -74,6 +82,7 @@ MainMenuState::MainMenuState(sf::RenderWindow *window, Game *game)
     m_Logger.error("Could not load resource: assets/menu_choice_change.mp3");
   }
   m_MenuChoiceChangeSound.setBuffer(m_MenuChoiceChangeSoundBuffer);
+
 }
 
 MainMenuState::~MainMenuState() {}
@@ -99,6 +108,7 @@ void MainMenuState::draw() {
 
   m_Window->draw(m_Background);
 	m_Window->draw(m_MenuHeading);
+	m_Window->draw(m_MenuSubHeading);
 
   for (auto &menuChoice : *m_MenuChoices) {
     m_Window->draw(menuChoice);

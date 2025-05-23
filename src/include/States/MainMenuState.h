@@ -1,5 +1,8 @@
 #pragma once
 
+#include "SFML/Graphics/Color.hpp"
+#include "SFML/Graphics/Drawable.hpp"
+#include "SFML/System/Vector2.hpp"
 #include <BaseState.h>
 #include <utils/Logging.h>
 
@@ -10,8 +13,15 @@
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/Text.hpp>
 #include <array>
+#include <vector>
 
 class Game;
+
+struct TextData {
+	std::string text;
+	sf::Vector2i position;
+	sf::Color color;
+};
 
 class MainMenuState : public BaseState {
 public:
@@ -34,7 +44,6 @@ private:
   sf::RectangleShape m_Background;
   sf::Texture m_BackgroundTexture;
   sf::Font m_MenuFont;
-  sf::Text m_MenuHeading;
   sf::Music m_MenuBgMusic;
   sf::SoundBuffer m_MenuChoiceChangeSoundBuffer;
   sf::Sound m_MenuChoiceChangeSound;
@@ -43,5 +52,8 @@ private:
   uint32_t m_ChoiceCount;
 	sf::Clock m_DeltaClock;
 
+	// Text objects
+  sf::Text m_MenuHeading;
 	std::optional<std::array<sf::Text, 3>> m_MenuChoices;
+	sf::Text m_MenuSubHeading;
 };
